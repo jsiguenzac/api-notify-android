@@ -67,10 +67,10 @@ class Vehiculo(BaseModel):
     nombreCliente: Optional[str] = ""
 
 class NotificationRequest(BaseModel):
-    to: str  # El token del administrador
+    to: str  # El token del administrador | usuario
     message: Optional[str] = ""  # Mensaje de la notificación
-    vehiculo: Vehiculo  # Información del vehículo
-    spaceId: int  # ID del espacio de estacionamiento
+    vehiculo: Optional[Vehiculo] = None  # Información del vehículo
+    spaceId: Optional[int] = None  # ID del espacio de estacionamiento
 
 # Función para obtener los tokens de usuarios administrativos
 def get_admin_tokens() -> List[str]:
