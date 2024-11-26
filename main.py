@@ -67,10 +67,13 @@ class Vehiculo(BaseModel):
     nombreCliente: Optional[str] = ""
 
 class NotificationRequest(BaseModel):
-    to: str  # El token del administrador | usuario
+    to: str  # El token del administrador
+    vehiculo: Vehiculo  # Información del vehículo
+    spaceId: int  # ID del espacio de estacionamiento
+    
+class UserNotificationRequest(BaseModel):
+    to: str  # El token del usuario
     message: Optional[str] = ""  # Mensaje de la notificación
-    vehiculo: Optional[Vehiculo] = None  # Información del vehículo
-    spaceId: Optional[int] = None  # ID del espacio de estacionamiento
 
 # Función para obtener los tokens de usuarios administrativos
 def get_admin_tokens() -> List[str]:
@@ -182,7 +185,7 @@ async def send_notification(request: NotificationRequest):
         raise HTTPException(status_code=500, detail=f"Error al enviar la notificación: {e}")
 
 @app.post("/send_user_notification")
-async def send_user_notification(request: NotificationRequest):
+async def send_user_notification(request: UserNotificationRequest):
     try:
         user_token = request.to
         message_text = request.message or "Tienes una nueva notificación."
