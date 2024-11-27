@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from firebase_admin import credentials, initialize_app, messaging, firestore
 import schedule
 import time
-import pytz
 from threading import Thread
 from datetime import datetime
 from pydantic import BaseModel
