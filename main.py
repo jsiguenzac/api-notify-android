@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from firebase_admin import credentials, initialize_app, messaging, firestore
 import schedule
 import time
+import pytz
 from threading import Thread
 from datetime import datetime
 from pydantic import BaseModel
@@ -149,7 +150,7 @@ def run_schedule():
         time.sleep(1)
 
 # Tarea programada
-schedule.every().day.at("18:15").do(check_parking_occupancy)
+schedule.every().day.at("00:30").do(check_parking_occupancy)
 thread = Thread(target=run_schedule, daemon=True)
 thread.start()
 
