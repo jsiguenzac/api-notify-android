@@ -134,7 +134,7 @@ def check_parking_occupancy():
             if admin_tokens:
                 message_body = "¡Alerta! El estacionamiento está lleno. No hay más espacios disponibles."
                 send_admin_notification(admin_tokens, message_body)
-        elif occupancy_percentage > 80:
+        elif occupancy_percentage >= 80:
             admin_tokens = get_admin_tokens()
             if admin_tokens:
                 message_body = "¡Atención! El estacionamiento está casi lleno."
@@ -149,12 +149,13 @@ def run_schedule():
         time.sleep(1)
 
 # Tarea programada
-schedule.every().day.at("00:30").do(check_parking_occupancy)
+schedule.every().day.at("20:15").do(check_parking_occupancy)
 thread = Thread(target=run_schedule, daemon=True)
 thread.start()
 
 @app.get("/")
 async def hello():
+    check_parking_occupancy()
     return {"message": "¡La aplicación está funcionando!"}
 
 @app.post("/send_notification")
